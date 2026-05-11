@@ -1,5 +1,7 @@
 import express from 'express';
+import {tavily} from '@tavily/core';
 
+const client = tavily({apiKey:process.env.TAVILY_API_KEY});
 const app = express();
 
 app.use(express.json());
@@ -8,14 +10,21 @@ app.post("/conversation",async(req,res)=>{
     //get the query from the user
     const query = req.body.query;
     //make sure user has access/credits to hit the endpoint
-    
+
     //check if we have web seach indexed for a similar query
 
     //web search to gather resources
+    const webSeachResponse = await client.search(query,{
+        searchDepth:"advanced"
+    });
 
+    const webSearchResult = webSeachResponse.results;
+    
     //do some context engineering on the prompt + web seach repsonses
 
     //hit the LLM and stream back the reponse
+    //hit the api llm 
+    
 
     //also strema back sources and follow up questions (which we get from another parallel LLM call)
 
